@@ -1,0 +1,35 @@
+
+# CLion
+.idea/
+cmake-build-*/
+build/
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+# Visual Studio
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.user
+
+# Compiled files
+*.exe
+*.dll
+*.lib
+*.obj
+*.o
+*.pdb
+*.ptx
+*.cubin
+
+# CUDA
+*.fatbin
+
+# System
+.DS_Store
+Thumbs.db
