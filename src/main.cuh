@@ -22,11 +22,12 @@ do {                                                                            
 }while (0)                                                                      \
 
 
-//检查 Kernel 启动与执行错误
-#define CHEAK_KERNEL()  \
-    do {                \
-        CHECK
-}
+//检查 Kernel 启动与执行错误(启动Kernel函数无返回值)
+#define CHEAK_KERNEL()                  \
+    do {                                \
+        CHECK(cudaGetLastError());      \
+        CHECK(cudaDeviceSynchronize()); \
+}while (0)                              \
 
 
 #endif //CUDA_ASCII_3D_RENDERER_MAIN_CUH

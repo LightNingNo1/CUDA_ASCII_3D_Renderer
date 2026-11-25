@@ -19,8 +19,11 @@ find_package(CUDAToolkit REQUIRED)
 
 # 创建可执行文件
 add_executable(CUDA_ASCII_3D_Renderer
-        src/main.cu
-        src/main.cuh
+        src/Vector3.cu
+)
+
+target_include_directories(CUDA_ASCII_3D_Renderer
+        PRIVATE ${CMAKE_SOURCE_DIR}/include
 )
 
 # 链接 CUDA Runtime
