@@ -1,20 +1,56 @@
+
 #include <iostream>
+#include <memory>
+
 #include "math/Vector3.cuh"
+#include "math/Ray.cuh"
+
+#include "renderer/Sphere.cuh"
+#include "renderer/Triangle.cuh"
+#include "renderer/HittableList.cuh"
+#include "renderer/HitRecord.cuh"
 
 int main() {
-    Vector3 A(1, 2, 3);
-    Vector3 B(4, 5, 6);
 
-    Vector3 C = A + B;
+    HittableList world;
 
-    std::cout << "C: " << C.x << ", " << C.y << ", " << C.z << std::endl;
+    // 添加一个球体
+    world.add(std::make_shared<Sphere>(
+        Vector3(0, 0, -5),
+        1.0f
+    ));
 
-    Vector3 D = A * 3;
+    // 添加一个三角形
+    world.add(std::make_shared<Triangle>(
+        Vector3(-2, -1, -8),
+        Vector3( 2, -1, -8),
+        Vector3( 0,  2, -8)
+    ));
 
-    std::cout << "D: "<< D.x << ", " << D.y << ", " << D.z << std::endl;
-    std::cout << A.length() << std::endl;
-    std::cout << A.dot(B) << std::endl;
-    Vector3 E = B.cross(B);
+    // 创建射线
+    Ray ray(
+        Vector3(0, 0, 0),
+        Vector3(0, 0, -1)
+    );
 
-    std::cout << "E: " << E.x << ", " << E.y << ", " << E.z << std::endl;
+    HitRecord record;
+
+    bool isHit = world.hit(
+        ray,
+        0.001f,
+        1000.0f,
+        record
+    );
+
+    if (isHit) {
+        std::cout << "Hit!" << std::endl;
+        std::cout << "t = " << record.t << std::endl;
+        std::cout << "Point = " << record.point << std::endl;
+        std::cout << "Normal = " << record.normal << std::endl;
+        std::cout << "Front Face = " << record.frontFace << std::endl;
+    } else {
+        std::cout << "Miss!" << std::endl;
+    }
+
+    return 0;
 }

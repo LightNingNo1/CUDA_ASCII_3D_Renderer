@@ -20,6 +20,14 @@ find_package(CUDAToolkit REQUIRED)
 # 创建可执行文件
 add_executable(CUDA_ASCII_3D_Renderer
         src/Vector3.cu
+        include/math/Ray.cuh
+        include/renderer/Sphere.cuh
+        include/renderer/HitRecord.cuh
+        include/renderer/HittableList.cuh
+        include/renderer/Triangle.cuh
+        include/math/Matrix3x3.cuh
+        include/renderer/Hittable.cuh
+        include/renderer/Hittable.cuh
 )
 
 target_include_directories(CUDA_ASCII_3D_Renderer
