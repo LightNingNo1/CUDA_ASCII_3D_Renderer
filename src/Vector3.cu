@@ -1,56 +1,63 @@
 
 #include <iostream>
+#include <vector>
 #include <memory>
 
-#include "math/Vector3.cuh"
-#include "math/Ray.cuh"
-
-#include "renderer/Sphere.cuh"
-#include "renderer/Triangle.cuh"
-#include "renderer/HittableList.cuh"
-#include "renderer/HitRecord.cuh"
+#include "renderer/GPUSceneBuilder.cuh"
+#include "renderer/GPUSceneUpload.cuh"
 
 int main() {
-
+    // 1. 创建 CPU 场景
     HittableList world;
 
-    // 添加一个球体
     world.add(std::make_shared<Sphere>(
         Vector3(0, 0, -5),
         1.0f
     ));
 
-    // 添加一个三角形
-    world.add(std::make_shared<Triangle>(
-        Vector3(-2, -1, -8),
-        Vector3( 2, -1, -8),
-        Vector3( 0,  2, -8)
+    world.add(std::make_shared<Sphere>(
+        Vector3(2, 0, -5),
+        0.5f
     ));
 
-    // 创建射线
-    Ray ray(
-        Vector3(0, 0, 0),
-        Vector3(0, 0, -1)
+    world.add(std::make_shared<Triangle>(
+        Vector3(-1, -1, -8),
+        Vector3(1, -1, -8),
+        Vector3(0, 1, -8)
+    ));
+
+    // 2. 准备 GPU 数据容器
+    std::vector<SphereData> spheres;
+    std::vector<TriangleData> triangles;
+
+    // 3. 从 CPU 场景提取数据
+    buildGPUSceneData(
+        world,
+        spheres,
+        triangles
     );
 
-    HitRecord record;
+    // 4. 查看转换结果
+    std::cout << "Sphere count: "
+              << spheres.size() << std::endl;
 
-    bool isHit = world.hit(
-        ray,
-        0.001f,
-        1000.0f,
-        record
+    std::cout << "Triangle count: "
+              << triangles.size() << std::endl;
+
+    // 5. 上传 GPU
+    GPUScene scene{};
+
+    uploadGPUScene(
+        spheres,
+        triangles,
+        scene
     );
 
-    if (isHit) {
-        std::cout << "Hit!" << std::endl;
-        std::cout << "t = " << record.t << std::endl;
-        std::cout << "Point = " << record.point << std::endl;
-        std::cout << "Normal = " << record.normal << std::endl;
-        std::cout << "Front Face = " << record.frontFace << std::endl;
-    } else {
-        std::cout << "Miss!" << std::endl;
-    }
+    std::cout << "GPU Scene uploaded successfully!"
+              << std::endl;
+
+    // 6. 释放 GPU 显存
+    releaseGPUScene(scene);
 
     return 0;
 }

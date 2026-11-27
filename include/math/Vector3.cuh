@@ -2,6 +2,7 @@
 #define CUDA_ASCII_3D_RENDERER_VECTOR3_CUH
 
 #include <cmath>
+#include <ostream>
 
 struct Vector3 {
 

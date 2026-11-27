@@ -15,7 +15,7 @@ do {                                                                            
     cudaError_t err = call;                                                     \
     if (err != cudaSuccess) {                                                   \
         std::cerr << "CUDA error: " << cudaGetErrorString(err) << std::endl;    \
-        << "File: " << __FILE__                                                 \
+        std::cerr << "File: " << __FILE__                                       \
         << " Line: " << __LINE__ << std::endl;                                  \
         std::exit(EXIT_FAILURE);                                                \
     }                                                                           \
@@ -25,8 +25,8 @@ do {                                                                            
 //检查 Kernel 启动与执行错误(启动Kernel函数无返回值)
 #define CHEAK_KERNEL()                  \
     do {                                \
-        CHECK(cudaGetLastError());      \
-        CHECK(cudaDeviceSynchronize()); \
+        CHEAK(cudaGetLastError());      \
+        CHEAK(cudaDeviceSynchronize()); \
 }while (0)                              \
 
 

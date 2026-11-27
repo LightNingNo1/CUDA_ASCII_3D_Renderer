@@ -1,6 +1,6 @@
 
-#ifndef CUDA_ASCII_3D_RENDERER_HIDRECORD_CUH
-#define CUDA_ASCII_3D_RENDERER_HIDRECORD_CUH
+#ifndef CUDA_ASCII_3D_RENDERER_HITRECORD_CUH
+#define CUDA_ASCII_3D_RENDERER_HITRECORD_CUH
 
 
 struct HitRecord {
@@ -19,4 +19,4 @@ inline std::ostream& operator<<(std::ostream& os, const HitRecord& rec) {
 }
 
 
-#endif //CUDA_ASCII_3D_RENDERER_HIDRECORD_CUH
+#endif //CUDA_ASCII_3D_RENDERER_HITRECORD_CUH

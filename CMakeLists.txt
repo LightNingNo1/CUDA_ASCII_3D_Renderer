@@ -27,7 +27,11 @@ add_executable(CUDA_ASCII_3D_Renderer
         include/renderer/Triangle.cuh
         include/math/Matrix3x3.cuh
         include/renderer/Hittable.cuh
-        include/renderer/Hittable.cuh
+        include/renderer/GPUScene.cuh
+        include/renderer/GPUSceneUpload.cuh
+        include/utils/CudaCheck.cuh
+        include/renderer/GPUSceneBuilder.cuh
+        include/renderer/GPUSceneManager.cuh
 )
 
 target_include_directories(CUDA_ASCII_3D_Renderer
