@@ -32,6 +32,9 @@ add_executable(CUDA_ASCII_3D_Renderer
         include/utils/CudaCheck.cuh
         include/renderer/GPUSceneBuilder.cuh
         include/renderer/GPUSceneManager.cuh
+        include/renderer/SphereIntersection.cuh
+        include/renderer/TriangleIntersection.cuh
+        include/renderer/GPUSceneHit.cuh
 )
 
 target_include_directories(CUDA_ASCII_3D_Renderer

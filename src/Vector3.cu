@@ -1,13 +1,62 @@
 
 #include <iostream>
 #include <vector>
-#include <memory>
+#include <cstdio>
 
-#include "renderer/GPUSceneBuilder.cuh"
-#include "renderer/GPUSceneUpload.cuh"
+#include "renderer/GPUSceneManager.cuh"
+#include "renderer/GPUSceneHit.cuh"
+
+// GPU 求交测试 Kernel
+__global__ void testIntersection(
+    GPUScene scene,
+    Ray ray,
+    int rayID
+) {
+    if (blockIdx.x != 0 || threadIdx.x != 0) {
+        return;
+    }
+
+    HitRecord record;
+
+    bool hit = hitGPUScene(
+        scene,
+        ray,
+        0.001f,
+        1000.0f,
+        record
+    );
+
+    if (hit) {
+        printf("Ray %d: Hit!\n", rayID);
+
+        printf("t = %.4f\n", record.t);
+
+        printf(
+            "Point = (%.4f, %.4f, %.4f)\n",
+            record.point.x,
+            record.point.y,
+            record.point.z
+        );
+
+        printf(
+            "Normal = (%.4f, %.4f, %.4f)\n",
+            record.normal.x,
+            record.normal.y,
+            record.normal.z
+        );
+
+        printf(
+            "Front Face = %d\n",
+            record.frontFace
+        );
+    }
+    else {
+        printf("Ray %d: Miss!\n", rayID);
+    }
+}
 
 int main() {
-    // 1. 创建 CPU 场景
+    // 1. 构建 CPU 场景
     HittableList world;
 
     world.add(std::make_shared<Sphere>(
@@ -15,49 +64,46 @@ int main() {
         1.0f
     ));
 
-    world.add(std::make_shared<Sphere>(
-        Vector3(2, 0, -5),
-        0.5f
-    ));
-
     world.add(std::make_shared<Triangle>(
-        Vector3(-1, -1, -8),
-        Vector3(1, -1, -8),
-        Vector3(0, 1, -8)
+        Vector3(2, -1, -8),
+        Vector3(4, -1, -8),
+        Vector3(3, 1, -8)
     ));
 
-    // 2. 准备 GPU 数据容器
-    std::vector<SphereData> spheres;
-    std::vector<TriangleData> triangles;
+    // 2. 构建 GPU 场景
+    GPUSceneManager manager;
 
-    // 3. 从 CPU 场景提取数据
-    buildGPUSceneData(
-        world,
-        spheres,
-        triangles
+    manager.update(world);
+
+    GPUScene scene = manager.getScene();
+
+    // 3. 测试球体
+    Ray sphereRay(
+        Vector3(0, 0, 0),
+        Vector3(0, 0, -1)
     );
 
-    // 4. 查看转换结果
-    std::cout << "Sphere count: "
-              << spheres.size() << std::endl;
-
-    std::cout << "Triangle count: "
-              << triangles.size() << std::endl;
-
-    // 5. 上传 GPU
-    GPUScene scene{};
-
-    uploadGPUScene(
-        spheres,
-        triangles,
-        scene
+    testIntersection<<<1, 1>>>(
+        scene,
+        sphereRay,
+        0
     );
 
-    std::cout << "GPU Scene uploaded successfully!"
-              << std::endl;
+    CHECK_KERNEL();
 
-    // 6. 释放 GPU 显存
-    releaseGPUScene(scene);
+    // 4. 测试三角形
+    Ray triangleRay(
+        Vector3(3, 0, 0),
+        Vector3(0, 0, -1)
+    );
+
+    testIntersection<<<1, 1>>>(
+        scene,
+        triangleRay,
+        1
+    );
+
+    CHECK_KERNEL();
 
     return 0;
 }
