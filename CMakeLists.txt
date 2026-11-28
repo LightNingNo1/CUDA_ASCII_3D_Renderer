@@ -19,22 +19,26 @@ find_package(CUDAToolkit REQUIRED)
 
 # 创建可执行文件
 add_executable(CUDA_ASCII_3D_Renderer
-        src/Vector3.cu
+        src/main.cu
         include/math/Ray.cuh
-        include/renderer/Sphere.cuh
-        include/renderer/HitRecord.cuh
-        include/renderer/HittableList.cuh
-        include/renderer/Triangle.cuh
+        include/renderer/Object/Sphere.cuh
+        include/renderer/Hit/HitRecord.cuh
+        include/renderer/Hit/HittableList.cuh
+        include/renderer/Object/Triangle.cuh
         include/math/Matrix3x3.cuh
-        include/renderer/Hittable.cuh
-        include/renderer/GPUScene.cuh
-        include/renderer/GPUSceneUpload.cuh
+        include/renderer/Hit/Hittable.cuh
+        include/renderer/GPUScene/GPUScene.cuh
+        include/renderer/GPUScene/GPUSceneUpload.cuh
         include/utils/CudaCheck.cuh
-        include/renderer/GPUSceneBuilder.cuh
-        include/renderer/GPUSceneManager.cuh
-        include/renderer/SphereIntersection.cuh
-        include/renderer/TriangleIntersection.cuh
-        include/renderer/GPUSceneHit.cuh
+        include/renderer/GPUScene/GPUSceneBuilder.cuh
+        include/renderer/GPUScene/GPUSceneManager.cuh
+        include/renderer/Intersection/SphereIntersection.cuh
+        include/renderer/Intersection/TriangleIntersection.cuh
+        include/renderer/GPUScene/GPUSceneHit.cuh
+        include/renderer/Camera/Camera.cuh
+        include/renderer/Camera/GPUCameraManager.cuh
+        include/renderer/RayTracingKernel.cuh
+        include/renderer/Image/Pixel.cuh
 )
 
 target_include_directories(CUDA_ASCII_3D_Renderer

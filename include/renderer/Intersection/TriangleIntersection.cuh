@@ -5,10 +5,10 @@
 #ifndef CUDA_ASCII_3D_RENDERER_TRIANGLEINTERSECTION_CUH
 #define CUDA_ASCII_3D_RENDERER_TRIANGLEINTERSECTION_CUH
 
-#include "Hitrecord.cuh"
+#include "../Hit/HitRecord.cuh"
 
 #include "math/ray.cuh"
-#include <renderer/GPUScene.cuh>
+#include "../GPUScene/GPUScene.cuh"
 
 
 //Möller–Trumbore法求交

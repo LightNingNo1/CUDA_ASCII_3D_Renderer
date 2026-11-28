@@ -6,7 +6,7 @@
 #define CUDA_ASCII_3D_RENDERER_HITTABLE_CUH
 
 #include "math/Ray.cuh"
-#include "Hitrecord.cuh"
+#include "HitRecord.cuh"
 
 class Hittable {
     public:

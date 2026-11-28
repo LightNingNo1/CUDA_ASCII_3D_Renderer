@@ -2,9 +2,9 @@
 #ifndef CUDA_ASCII_3D_RENDERER_SPHERE_CUH
 #define CUDA_ASCII_3D_RENDERER_SPHERE_CUH
 #include "math/Ray.cuh"
-#include "HitRecord.cuh"
-#include "Hittable.cuh"
-#include "renderer/SphereIntersection.cuh"
+#include "../Hit/HitRecord.cuh"
+#include "../Hit/Hittable.cuh"
+#include "../Intersection/SphereIntersection.cuh"
 
 
 struct Sphere : public Hittable{

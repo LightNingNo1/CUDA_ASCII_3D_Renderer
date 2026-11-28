@@ -8,10 +8,10 @@
 #include <vector>
 #include <memory>
 
-#include "renderer/HittableList.cuh"
-#include "renderer/Sphere.cuh"
-#include "renderer/Triangle.cuh"
-#include "renderer/GPUScene.cuh"
+#include "../Hit/HittableList.cuh"
+#include "../Object/Sphere.cuh"
+#include "../Object/Triangle.cuh"
+#include "GPUScene.cuh"
 
 // 将 CPU 场景转换为 GPU 几何数据
 inline void buildGPUSceneData(

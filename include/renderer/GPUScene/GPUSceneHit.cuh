@@ -6,11 +6,11 @@
 #define CUDA_ASCII_3D_RENDERER_GPUSCENEHIT_CUH
 
 
-#include "renderer/GPUScene.cuh"
-#include "renderer/HitRecord.cuh"
+#include "GPUScene.cuh"
+#include "../Hit/HitRecord.cuh"
 
-#include "renderer/SphereIntersection.cuh"
-#include "renderer/TriangleIntersection.cuh"
+#include "../Intersection/SphereIntersection.cuh"
+#include "../Intersection/TriangleIntersection.cuh"
 
 __device__
 inline bool hitGPUScene(

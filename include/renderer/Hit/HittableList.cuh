@@ -5,7 +5,7 @@
 #include <vector>
 #include <memory>
 #include "Hittable.cuh"
-#include "Sphere.cuh"
+#include "../Object/Sphere.cuh"
 
 struct HittableList : public Hittable {
     //host端管理几何体

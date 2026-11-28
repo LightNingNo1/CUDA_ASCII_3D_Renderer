@@ -14,6 +14,8 @@ class GPUSceneManager {
 private:
     GPUScene scene{};
 
+    GPUScene* deviceScene = nullptr;
+
     int sphereCapacity = 0;
     int triangleCapacity = 0;
 
@@ -46,6 +48,17 @@ private:
         deviceData = newData;
         capacity = newCapacity;
 
+    }
+
+    void allocateDeviceScene() {
+        if (deviceScene != nullptr) {
+            return;
+        }
+
+        CHECK(cudaMalloc(
+            reinterpret_cast<void**>(&deviceScene),
+            sizeof(GPUScene)
+        ));
     }
 public:
 
@@ -103,6 +116,17 @@ public:
 
         scene.triangleCount =
             static_cast<int>(hostTriangles.size());
+
+        // 分配 GPU 端场景描述对象
+        allocateDeviceScene();
+
+        // 上传场景描述对象
+        CHECK(cudaMemcpy(
+            deviceScene,
+            &scene,
+            sizeof(GPUScene),
+            cudaMemcpyHostToDevice
+        ));
     }
 
     //从CPU场景构建并同步GPU场景
@@ -133,6 +157,11 @@ public:
 
     // 释放 GPU 显存
     void release() {
+        if (deviceScene != nullptr) {
+            CHECK(cudaFree(deviceScene));
+            deviceScene = nullptr;
+        }
+
         if (scene.spheres != nullptr) {
             CHECK(cudaFree(scene.spheres));
             scene.spheres = nullptr;
@@ -148,6 +177,11 @@ public:
 
         sphereCapacity = 0;
         triangleCapacity = 0;
+    }
+
+    // 获取 GPU 端场景描述对象
+    const GPUScene* getDeviceScene() const {
+        return deviceScene;
     }
 
 };

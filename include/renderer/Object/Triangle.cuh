@@ -2,9 +2,9 @@
 #ifndef CUDA_ASCII_3D_RENDERER_TRIANGLE_CUH
 #define CUDA_ASCII_3D_RENDERER_TRIANGLE_CUH
 #include "math/Vector3.cuh"
-#include "HitRecord.cuh"
-#include "Hittable.cuh"
-#include "TriangleIntersection.cuh"
+#include "../Hit/HitRecord.cuh"
+#include "../Hit/Hittable.cuh"
+#include "../Intersection/TriangleIntersection.cuh"
 #include "math/Ray.cuh"
 #include "math/Matrix3x3.cuh"
 

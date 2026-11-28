@@ -4,10 +4,10 @@
 
 #ifndef CUDA_ASCII_3D_RENDERER_SPHEREINTERSECTION_CUH
 #define CUDA_ASCII_3D_RENDERER_SPHEREINTERSECTION_CUH
-#include "Hitrecord.cuh"
+#include "../Hit/HitRecord.cuh"
 
 #include "math/ray.cuh"
-#include <renderer/GPUScene.cuh>
+#include "../GPUScene/GPUScene.cuh"
 
 
 

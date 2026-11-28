@@ -74,10 +74,10 @@
 | Matrix4      | 四维变换矩阵 | 待开发         |
 | Ray          | 光线数据结构 | 已实现         |
 | Ray-Sphere   | 光线与球体求交 | 已实现         |
-| Ray-Triangle | 光线与三角形求交 | 待开发         |
+| Ray-Triangle | 光线与三角形求交 | 已实现         |
 | Lighting     | 光照与着色 | 待开发         |
-| Camera       | 摄像机系统 | 待开发         |
-| Scene        | 场景管理 | 待开发         |
+| Camera       | 摄像机系统 | 待完善         |
+| Scene        | 场景管理 | 待完善         |
 | Shadow       | 阴影计算 | 待开发         |
 
 ## 项目目录
